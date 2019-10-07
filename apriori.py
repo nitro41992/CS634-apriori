@@ -24,6 +24,7 @@ def apriori(filename, min_supp, min_conf):
     while True:
         combs.extend(map(list, (it.permutations(unique_data, i))))
         
+        print('Calculating supports...')
         break_counter = prev_count
         for comb in combs:
             match_count = 0
@@ -45,6 +46,7 @@ def apriori(filename, min_supp, min_conf):
         
         updated_combs = [item[0] for item in supports]
 
+        print('Calculating confidences...')
         confidence = 0
         for comb in updated_combs:
             den = 0
@@ -58,19 +60,21 @@ def apriori(filename, min_supp, min_conf):
 
         i += 1
 
+    print('Generating confidences.csv and supports.csv...')
     with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
-        wr = csv.writer(myfile)
+        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(['Association','Support(%)'])
         wr.writerows(supports)
 
     with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
-        wr = csv.writer(myfile)
+        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(['Association','Confidence(%)'])
         wr.writerows(confidences)
 
 
-filename = input("Enter the name of the transaction file: ")
+filename = input("Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
 min_supp = int(input("Enter the minimum support value (0 - 100%): "))
 min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
 apriori(filename, min_supp, min_conf)
+print('Process completed.')
 
