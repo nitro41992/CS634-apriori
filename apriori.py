@@ -39,9 +39,6 @@ def apriori(filename, min_supp, min_conf):
                     supports.append(row)
                     prev_count += 1
 
-        # print(f'supports: {supports}')
-        # print(f'prev_count: {prev_count}')
-        # print(f'break_counter: {break_counter}')
         if prev_count - break_counter == 0:
             break
 
@@ -63,10 +60,12 @@ def apriori(filename, min_supp, min_conf):
 
     with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
         wr = csv.writer(myfile)
+        wr.writerow(['Association','Support(%)'])
         wr.writerows(supports)
 
     with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
         wr = csv.writer(myfile)
+        wr.writerow(['Association','Confidence(%)'])
         wr.writerows(confidences)
 
 
