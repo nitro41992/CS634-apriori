@@ -46,7 +46,6 @@ def apriori(filename, min_supp, min_conf):
             break
 
         updated_combs = [item[0] for item in supports]
-        # print(updated_combs)
 
         print('Calculating confidences...')
         confidence = 0
@@ -66,7 +65,7 @@ def apriori(filename, min_supp, min_conf):
                     confidence = round((num / den) * 100, 2)
                     if confidence > min_conf:
                         confidences.append(
-                            [f'[{", ".join(left)} -> {", ".join(right)}]', confidence])
+                            [f'{{{", ".join(left)}}} -> {{{", ".join(right)}}}', confidence])
 
         i += 1
 
