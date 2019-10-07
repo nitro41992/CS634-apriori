@@ -1,256 +1,36 @@
-"['Milk', 'Beer']",44.44
-"['Milk', 'Chip']",33.33
-"['Milk', 'Diaper']",44.44
-"['Milk', 'Cereal']",33.33
-"['Milk', 'Egg']",33.33
-"['Milk', 'Vitamin']",44.44
-"['Milk', 'Paper towel']",33.33
-"['Milk', 'Ice cream']",44.44
-"['Milk', 'Apple']",66.67
-"['Beer', 'Milk']",50.0
-"['Beer', 'Chip']",62.5
-"['Beer', 'Diaper']",62.5
-"['Beer', 'Egg']",50.0
-"['Beer', 'Vitamin']",37.5
-"['Beer', 'Ice cream']",50.0
-"['Beer', 'Apple']",62.5
-"['Chip', 'Milk']",33.33
-"['Chip', 'Beer']",55.56
-"['Chip', 'Diaper']",55.56
-"['Chip', 'Egg']",33.33
-"['Chip', 'Vitamin']",44.44
-"['Chip', 'Paper towel']",33.33
-"['Chip', 'Ice cream']",33.33
-"['Chip', 'Apple']",44.44
-"['Diaper', 'Milk']",44.44
-"['Diaper', 'Beer']",55.56
-"['Diaper', 'Chip']",55.56
-"['Diaper', 'Vitamin']",33.33
-"['Diaper', 'Paper towel']",55.56
-"['Diaper', 'Ice cream']",44.44
-"['Diaper', 'Apple']",44.44
-"['Cereal', 'Milk']",60.0
-"['Cereal', 'Vitamin']",60.0
-"['Cereal', 'Ice cream']",60.0
-"['Cereal', 'Apple']",80.0
-"['Egg', 'Milk']",37.5
-"['Egg', 'Beer']",50.0
-"['Egg', 'Chip']",37.5
-"['Egg', 'Vitamin']",75.0
-"['Egg', 'Paper towel']",37.5
-"['Egg', 'Ice cream']",50.0
 "['Egg', 'Apple']",75.0
-"['Vitamin', 'Milk']",44.44
-"['Vitamin', 'Beer']",33.33
-"['Vitamin', 'Chip']",44.44
-"['Vitamin', 'Diaper']",33.33
-"['Vitamin', 'Cereal']",33.33
-"['Vitamin', 'Egg']",66.67
-"['Vitamin', 'Paper towel']",55.56
-"['Vitamin', 'Ice cream']",44.44
-"['Vitamin', 'Apple']",77.78
-"['Paper towel', 'Milk']",37.5
-"['Paper towel', 'Chip']",37.5
-"['Paper towel', 'Diaper']",62.5
-"['Paper towel', 'Egg']",37.5
-"['Paper towel', 'Vitamin']",62.5
-"['Paper towel', 'Ice cream']",37.5
-"['Paper towel', 'Apple']",37.5
-"['Ice cream', 'Milk']",44.44
-"['Ice cream', 'Beer']",44.44
-"['Ice cream', 'Chip']",33.33
-"['Ice cream', 'Diaper']",44.44
-"['Ice cream', 'Cereal']",33.33
-"['Ice cream', 'Egg']",44.44
-"['Ice cream', 'Vitamin']",44.44
-"['Ice cream', 'Paper towel']",33.33
-"['Ice cream', 'Apple']",88.89
-"['Apple', 'Milk']",50.0
-"['Apple', 'Beer']",41.67
-"['Apple', 'Chip']",33.33
-"['Apple', 'Diaper']",33.33
-"['Apple', 'Cereal']",33.33
-"['Apple', 'Egg']",50.0
-"['Apple', 'Vitamin']",58.33
-"['Apple', 'Paper towel']",25.0
-"['Apple', 'Ice cream']",66.67
-"['Milk', 'Beer', 'Diaper']",75.0
-"['Milk', 'Beer', 'Ice cream']",75.0
-"['Milk', 'Beer', 'Apple']",75.0
-"['Milk', 'Diaper', 'Beer']",75.0
-"['Milk', 'Vitamin', 'Apple']",75.0
-"['Milk', 'Ice cream', 'Beer']",75.0
-"['Milk', 'Ice cream', 'Apple']",100.0
-"['Milk', 'Apple', 'Beer']",50.0
-"['Milk', 'Apple', 'Vitamin']",50.0
-"['Milk', 'Apple', 'Ice cream']",66.67
-"['Beer', 'Milk', 'Diaper']",75.0
-"['Beer', 'Milk', 'Ice cream']",75.0
-"['Beer', 'Milk', 'Apple']",75.0
-"['Beer', 'Chip', 'Diaper']",60.0
-"['Beer', 'Chip', 'Egg']",60.0
-"['Beer', 'Diaper', 'Milk']",60.0
-"['Beer', 'Diaper', 'Chip']",60.0
-"['Beer', 'Diaper', 'Apple']",60.0
-"['Beer', 'Egg', 'Chip']",75.0
-"['Beer', 'Egg', 'Vitamin']",75.0
-"['Beer', 'Egg', 'Apple']",75.0
-"['Beer', 'Vitamin', 'Egg']",100.0
-"['Beer', 'Ice cream', 'Milk']",75.0
-"['Beer', 'Ice cream', 'Apple']",100.0
-"['Beer', 'Apple', 'Milk']",60.0
-"['Beer', 'Apple', 'Diaper']",60.0
-"['Beer', 'Apple', 'Egg']",60.0
-"['Beer', 'Apple', 'Ice cream']",80.0
-"['Chip', 'Beer', 'Diaper']",60.0
-"['Chip', 'Beer', 'Egg']",60.0
-"['Chip', 'Diaper', 'Beer']",60.0
-"['Chip', 'Diaper', 'Vitamin']",60.0
-"['Chip', 'Diaper', 'Paper towel']",60.0
-"['Chip', 'Egg', 'Beer']",100.0
-"['Chip', 'Vitamin', 'Diaper']",75.0
-"['Chip', 'Vitamin', 'Apple']",75.0
-"['Chip', 'Paper towel', 'Diaper']",100.0
-"['Chip', 'Apple', 'Vitamin']",75.0
-"['Diaper', 'Milk', 'Beer']",75.0
-"['Diaper', 'Beer', 'Milk']",60.0
-"['Diaper', 'Beer', 'Chip']",60.0
-"['Diaper', 'Beer', 'Apple']",60.0
-"['Diaper', 'Chip', 'Beer']",60.0
-"['Diaper', 'Chip', 'Vitamin']",60.0
-"['Diaper', 'Chip', 'Paper towel']",60.0
-"['Diaper', 'Vitamin', 'Chip']",100.0
-"['Diaper', 'Paper towel', 'Chip']",60.0
-"['Diaper', 'Ice cream', 'Apple']",75.0
-"['Diaper', 'Apple', 'Beer']",75.0
-"['Diaper', 'Apple', 'Ice cream']",75.0
-"['Cereal', 'Ice cream', 'Apple']",100.0
-"['Cereal', 'Apple', 'Ice cream']",75.0
-"['Egg', 'Beer', 'Chip']",75.0
-"['Egg', 'Beer', 'Vitamin']",75.0
-"['Egg', 'Beer', 'Apple']",75.0
-"['Egg', 'Chip', 'Beer']",100.0
-"['Egg', 'Vitamin', 'Beer']",50.0
-"['Egg', 'Vitamin', 'Paper towel']",50.0
-"['Egg', 'Vitamin', 'Ice cream']",50.0
-"['Egg', 'Vitamin', 'Apple']",66.67
-"['Egg', 'Paper towel', 'Vitamin']",100.0
-"['Egg', 'Ice cream', 'Vitamin']",75.0
-"['Egg', 'Ice cream', 'Apple']",100.0
-"['Egg', 'Apple', 'Beer']",50.0
-"['Egg', 'Apple', 'Vitamin']",66.67
-"['Egg', 'Apple', 'Ice cream']",66.67
-"['Vitamin', 'Milk', 'Apple']",75.0
-"['Vitamin', 'Beer', 'Egg']",100.0
-"['Vitamin', 'Chip', 'Diaper']",75.0
-"['Vitamin', 'Chip', 'Apple']",75.0
-"['Vitamin', 'Diaper', 'Chip']",100.0
-"['Vitamin', 'Egg', 'Beer']",50.0
-"['Vitamin', 'Egg', 'Paper towel']",50.0
-"['Vitamin', 'Egg', 'Ice cream']",50.0
-"['Vitamin', 'Egg', 'Apple']",66.67
-"['Vitamin', 'Paper towel', 'Egg']",60.0
-"['Vitamin', 'Paper towel', 'Apple']",60.0
-"['Vitamin', 'Ice cream', 'Egg']",75.0
-"['Vitamin', 'Ice cream', 'Apple']",100.0
-"['Vitamin', 'Apple', 'Milk']",42.86
-"['Vitamin', 'Apple', 'Chip']",42.86
-"['Vitamin', 'Apple', 'Egg']",57.14
-"['Vitamin', 'Apple', 'Paper towel']",42.86
-"['Vitamin', 'Apple', 'Ice cream']",57.14
-"['Paper towel', 'Chip', 'Diaper']",100.0
-"['Paper towel', 'Diaper', 'Chip']",60.0
-"['Paper towel', 'Egg', 'Vitamin']",100.0
-"['Paper towel', 'Vitamin', 'Egg']",60.0
-"['Paper towel', 'Vitamin', 'Apple']",60.0
-"['Paper towel', 'Apple', 'Vitamin']",100.0
-"['Ice cream', 'Milk', 'Beer']",75.0
-"['Ice cream', 'Milk', 'Apple']",100.0
-"['Ice cream', 'Beer', 'Milk']",75.0
-"['Ice cream', 'Beer', 'Apple']",100.0
-"['Ice cream', 'Diaper', 'Apple']",75.0
-"['Ice cream', 'Cereal', 'Apple']",100.0
-"['Ice cream', 'Egg', 'Vitamin']",75.0
-"['Ice cream', 'Egg', 'Apple']",100.0
-"['Ice cream', 'Vitamin', 'Egg']",75.0
-"['Ice cream', 'Vitamin', 'Apple']",100.0
-"['Ice cream', 'Apple', 'Milk']",50.0
-"['Ice cream', 'Apple', 'Beer']",50.0
-"['Ice cream', 'Apple', 'Diaper']",37.5
-"['Ice cream', 'Apple', 'Cereal']",37.5
-"['Ice cream', 'Apple', 'Egg']",50.0
-"['Ice cream', 'Apple', 'Vitamin']",50.0
-"['Apple', 'Milk', 'Beer']",50.0
-"['Apple', 'Milk', 'Vitamin']",50.0
-"['Apple', 'Milk', 'Ice cream']",66.67
-"['Apple', 'Beer', 'Milk']",60.0
-"['Apple', 'Beer', 'Diaper']",60.0
-"['Apple', 'Beer', 'Egg']",60.0
-"['Apple', 'Beer', 'Ice cream']",80.0
-"['Apple', 'Chip', 'Vitamin']",75.0
-"['Apple', 'Diaper', 'Beer']",75.0
-"['Apple', 'Diaper', 'Ice cream']",75.0
-"['Apple', 'Cereal', 'Ice cream']",75.0
-"['Apple', 'Egg', 'Beer']",50.0
-"['Apple', 'Egg', 'Vitamin']",66.67
-"['Apple', 'Egg', 'Ice cream']",66.67
-"['Apple', 'Vitamin', 'Milk']",42.86
-"['Apple', 'Vitamin', 'Chip']",42.86
-"['Apple', 'Vitamin', 'Egg']",57.14
-"['Apple', 'Vitamin', 'Paper towel']",42.86
-"['Apple', 'Vitamin', 'Ice cream']",57.14
-"['Apple', 'Paper towel', 'Vitamin']",100.0
-"['Apple', 'Ice cream', 'Milk']",50.0
-"['Apple', 'Ice cream', 'Beer']",50.0
-"['Apple', 'Ice cream', 'Diaper']",37.5
-"['Apple', 'Ice cream', 'Cereal']",37.5
-"['Apple', 'Ice cream', 'Egg']",50.0
-"['Apple', 'Ice cream', 'Vitamin']",50.0
-"['Milk', 'Beer', 'Ice cream', 'Apple']",100.0
-"['Milk', 'Beer', 'Apple', 'Ice cream']",100.0
-"['Milk', 'Ice cream', 'Beer', 'Apple']",100.0
-"['Milk', 'Ice cream', 'Apple', 'Beer']",75.0
-"['Milk', 'Apple', 'Beer', 'Ice cream']",100.0
-"['Milk', 'Apple', 'Ice cream', 'Beer']",75.0
-"['Beer', 'Milk', 'Ice cream', 'Apple']",100.0
-"['Beer', 'Milk', 'Apple', 'Ice cream']",100.0
-"['Beer', 'Ice cream', 'Milk', 'Apple']",100.0
-"['Beer', 'Ice cream', 'Apple', 'Milk']",75.0
-"['Beer', 'Apple', 'Milk', 'Ice cream']",100.0
-"['Beer', 'Apple', 'Ice cream', 'Milk']",75.0
-"['Egg', 'Vitamin', 'Ice cream', 'Apple']",100.0
-"['Egg', 'Vitamin', 'Apple', 'Ice cream']",75.0
-"['Egg', 'Ice cream', 'Vitamin', 'Apple']",100.0
-"['Egg', 'Ice cream', 'Apple', 'Vitamin']",75.0
-"['Egg', 'Apple', 'Vitamin', 'Ice cream']",75.0
-"['Egg', 'Apple', 'Ice cream', 'Vitamin']",75.0
-"['Vitamin', 'Egg', 'Ice cream', 'Apple']",100.0
-"['Vitamin', 'Egg', 'Apple', 'Ice cream']",75.0
-"['Vitamin', 'Ice cream', 'Egg', 'Apple']",100.0
-"['Vitamin', 'Ice cream', 'Apple', 'Egg']",75.0
-"['Vitamin', 'Apple', 'Egg', 'Ice cream']",75.0
-"['Vitamin', 'Apple', 'Ice cream', 'Egg']",75.0
-"['Ice cream', 'Milk', 'Beer', 'Apple']",100.0
-"['Ice cream', 'Milk', 'Apple', 'Beer']",75.0
-"['Ice cream', 'Beer', 'Milk', 'Apple']",100.0
-"['Ice cream', 'Beer', 'Apple', 'Milk']",75.0
-"['Ice cream', 'Egg', 'Vitamin', 'Apple']",100.0
-"['Ice cream', 'Egg', 'Apple', 'Vitamin']",75.0
-"['Ice cream', 'Vitamin', 'Egg', 'Apple']",100.0
-"['Ice cream', 'Vitamin', 'Apple', 'Egg']",75.0
-"['Ice cream', 'Apple', 'Milk', 'Beer']",75.0
-"['Ice cream', 'Apple', 'Beer', 'Milk']",75.0
-"['Ice cream', 'Apple', 'Egg', 'Vitamin']",75.0
-"['Ice cream', 'Apple', 'Vitamin', 'Egg']",75.0
-"['Apple', 'Milk', 'Beer', 'Ice cream']",100.0
-"['Apple', 'Milk', 'Ice cream', 'Beer']",75.0
-"['Apple', 'Beer', 'Milk', 'Ice cream']",100.0
-"['Apple', 'Beer', 'Ice cream', 'Milk']",75.0
-"['Apple', 'Egg', 'Vitamin', 'Ice cream']",75.0
-"['Apple', 'Egg', 'Ice cream', 'Vitamin']",75.0
-"['Apple', 'Vitamin', 'Egg', 'Ice cream']",75.0
-"['Apple', 'Vitamin', 'Ice cream', 'Egg']",75.0
-"['Apple', 'Ice cream', 'Milk', 'Beer']",75.0
-"['Apple', 'Ice cream', 'Beer', 'Milk']",75.0
-"['Apple', 'Ice cream', 'Egg', 'Vitamin']",75.0
-"['Apple', 'Ice cream', 'Vitamin', 'Egg']",75.0
+"['Egg', 'Beer']",75.0
+"['Cereal', 'Apple']",66.67
+"['Apple', 'Cereal']",66.67
+"['Apple', 'Beer']",66.67
+"['Beer', 'Apple']",57.14
+"['Beer', 'Milk']",71.43
+"['Milk', 'Vitamin']",57.14
+"['Milk', 'Beer']",71.43
+"['Chip', 'Vitamin']",60.0
+"['Chip', 'Ice cream']",60.0
+"['Chip', 'Beer']",60.0
+"['Egg', 'Apple']",75.0
+"['Egg', 'Beer']",75.0
+"['Cereal', 'Apple']",66.67
+"['Apple', 'Cereal']",66.67
+"['Apple', 'Beer']",66.67
+"['Beer', 'Apple']",57.14
+"['Beer', 'Milk']",71.43
+"['Milk', 'Vitamin']",57.14
+"['Milk', 'Beer']",71.43
+"['Chip', 'Vitamin']",60.0
+"['Chip', 'Ice cream']",60.0
+"['Chip', 'Beer']",60.0
+"['Cereal', 'Apple', 'Beer']",75.0
+"['Cereal', 'Beer', 'Apple']",100.0
+"['Apple', 'Cereal', 'Beer']",75.0
+"['Apple', 'Beer', 'Cereal']",75.0
+"['Ice cream', 'Beer', 'Milk']",100.0
+"['Ice cream', 'Milk', 'Beer']",100.0
+"['Beer', 'Cereal', 'Apple']",100.0
+"['Beer', 'Apple', 'Cereal']",75.0
+"['Beer', 'Ice cream', 'Milk']",100.0
+"['Beer', 'Milk', 'Ice cream']",60.0
+"['Milk', 'Ice cream', 'Beer']",100.0
+"['Milk', 'Beer', 'Ice cream']",60.0

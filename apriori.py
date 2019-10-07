@@ -15,44 +15,51 @@ def apriori(filename, min_supp, min_conf):
 
     supports = []
     data_size = len(data_list)
-
     combs = []
     updated_combs = []
-    # perms = []
-    for i in range(1, 5):
-        combs.extend(map(list, (it.permutations(unique_data, i))))
-        # perms.extend(it.permutations(unique_data, i))
-
-    for comb in combs:
-        match_count = 0
-        for item in data_list:
-            if set(comb).issubset(item):
-                match_count += 1
-        row = 0
-        if match_count > 0:
-            support = round((match_count / data_size) * 100, 2)
-            if support > min_supp:
-                row = [comb, support]
-                supports.append(row)
-
-    # print(supports)
-    updated_combs = [item[0] for item in supports]
-    # print(updated_combs)
-
-    confidence = 0
+    i = 1
+    prev_count = 0
     confidences = []
-    for comb in updated_combs:
-        den = 0
-        num = 0
-        if len(comb) > 1:
-            den = [i for i in supports if i[0] == comb[:-1]][0][1]
-            num = [i for i in supports if i[0] == comb][0][1]
-            confidence = round((num / den) * 100, 2)
-            if confidence > min_conf:
-                confidences.append([comb, confidence])
-    # print(confidences)
-    # print('\n')
-    # print(supports)
+    
+    while True:
+        combs.extend(map(list, (it.permutations(unique_data, i))))
+        
+        break_counter = prev_count
+        for comb in combs:
+            match_count = 0
+            for item in data_list:
+                if set(comb).issubset(item):
+                    match_count += 1
+            row = 0
+            if match_count > 0:
+                support = round((match_count / data_size) * 100, 2)
+                row = [comb, support]
+                check = any(row == sl for sl in supports)
+                if support > min_supp and check == False:
+                    supports.append(row)
+                    prev_count += 1
+
+        # print(f'supports: {supports}')
+        # print(f'prev_count: {prev_count}')
+        # print(f'break_counter: {break_counter}')
+        if prev_count - break_counter == 0:
+            break
+
+        
+        updated_combs = [item[0] for item in supports]
+
+        confidence = 0
+        for comb in updated_combs:
+            den = 0
+            num = 0
+            if len(comb) > 1:
+                den = [i for i in supports if i[0] == comb[:-1]][0][1]
+                num = [i for i in supports if i[0] == comb][0][1]
+                confidence = round((num / den) * 100, 2)
+                if confidence > min_conf:
+                    confidences.append([comb, confidence])
+
+        i += 1
 
     with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
         wr = csv.writer(myfile)
@@ -63,8 +70,8 @@ def apriori(filename, min_supp, min_conf):
         wr.writerows(confidences)
 
 
-    # filename = input("Enter the name of the transaction file: ")
-    # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
-    # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
-    # apriori(filename, min_supp, min_conf)
-apriori('data5', 10, 10)
+filename = input("Enter the name of the transaction file: ")
+min_supp = int(input("Enter the minimum support value (0 - 100%): "))
+min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
+apriori(filename, min_supp, min_conf)
+
