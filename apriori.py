@@ -56,12 +56,17 @@ def apriori(filename, min_supp, min_conf):
             size = len(comb)
             if size > 1:
                 for pos in range(size - 1, 0, -1):
-                    print(pos)
+
+                    left = [i for i in supports if i[0] == comb[:-pos]][0][0]
+                    right = [i for i in supports if i[0] == comb[:pos]][0][0]
+
                     den = [i for i in supports if i[0] == comb[:-pos]][0][1]
                     num = [i for i in supports if i[0] == comb][0][1]
+
                     confidence = round((num / den) * 100, 2)
                     if confidence > min_conf:
-                        confidences.append([comb, confidence])
+                        confidences.append(
+                            [f'{left} -> {right}', confidence])
 
         i += 1
 
@@ -82,5 +87,5 @@ def apriori(filename, min_supp, min_conf):
 # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
 # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
 # apriori(filename, min_supp, min_conf)
-apriori('test.txt', 30, 30)
+apriori('test.txt', 20, 40)
 print('Process completed.')
