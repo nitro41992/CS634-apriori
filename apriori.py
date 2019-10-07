@@ -66,7 +66,7 @@ def apriori(filename, min_supp, min_conf):
                     confidence = round((num / den) * 100, 2)
                     if confidence > min_conf:
                         confidences.append(
-                            [f'{left} -> {right}', confidence])
+                            [f'[{", ".join(left)} -> {", ".join(right)}]', confidence])
 
         i += 1
 
