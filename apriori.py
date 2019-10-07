@@ -50,9 +50,17 @@ def apriori(filename, min_supp, min_conf):
             confidence = round((num / den) * 100, 2)
             if confidence > min_conf:
                 confidences.append([comb, confidence])
-    print(confidences)
-    print('\n')
-    print(supports)
+    # print(confidences)
+    # print('\n')
+    # print(supports)
+
+    with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
+        wr = csv.writer(myfile)
+        wr.writerows(supports)
+
+    with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
+        wr = csv.writer(myfile)
+        wr.writerows(confidences)
 
 
     # filename = input("Enter the name of the transaction file: ")
