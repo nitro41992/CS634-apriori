@@ -3,7 +3,7 @@ import csv
 
 
 # def apriori(filename, min_supp, min_conf):
-def apriori(filename, min_supp):
+def apriori(filename, min_supp, min_conf):
     with open(filename, "rt", encoding='utf8') as f:
         reader = csv.reader(f)
         data_list = list(reader)
@@ -26,7 +26,6 @@ def apriori(filename, min_supp):
             updated_data.append(item)
 
     combs = list(it.permutations(updated_data, 2))
-    # print(combs)
 
     updated_combs = []
     conf = []
@@ -41,24 +40,18 @@ def apriori(filename, min_supp):
                 supports.update({comb: support})
                 updated_combs.append(comb)
 
-    sups_and_comps = {}
+    confidences = {}
     for comb in updated_combs:
         if set(comb).issubset(supports):
             conf = round((supports[comb] / supports[comb[0]]) * 100, 2)
-            sups_and_comps.update({comb: conf})
+            if conf > min_conf:
+                confidences.update({comb: conf})
 
-    print(sups_and_comps)
+    print(confidences)
     print(supports)
-    # data = []
-    # for line in updated_combs:
-    #     for item in line:
-    #         data.append(item)
-    # unique_data = list(dict.fromkeys(data))
-    # combs = list(set(it.combinations(updated_data, 3)))
-    # print(combs)
 
     # filename = input("Enter the name of the transaction file: ")
     # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
     # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
     # apriori(filename, min_supp, min_conf)
-apriori('data1', 25)
+apriori('data1', 25, 50)
