@@ -22,6 +22,7 @@ def apriori(filename, min_supp, min_conf):
     confidences = []
     
     while True:
+        print(f'Generating association rules for sets of {i}') if i > 1 else  print(f'Generating association rules for initial set')
         combs.extend(map(list, (it.permutations(unique_data, i))))
         
         print('Calculating supports...')
