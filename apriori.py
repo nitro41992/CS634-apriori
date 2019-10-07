@@ -58,7 +58,7 @@ def apriori(filename, min_supp, min_conf):
                 for pos in range(size - 1, 0, -1):
 
                     left = [i for i in supports if i[0] == comb[:-pos]][0][0]
-                    right = [i for i in supports if i[0] == comb[:pos]][0][0]
+                    right = [i for i in supports if i[0] == comb[-pos:]][0][0]
 
                     den = [i for i in supports if i[0] == comb[:-pos]][0][1]
                     num = [i for i in supports if i[0] == comb][0][1]
