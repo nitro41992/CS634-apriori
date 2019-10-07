@@ -2,7 +2,6 @@ import itertools as it
 import csv
 
 
-# def apriori(filename, min_supp, min_conf):
 def apriori(filename, min_supp, min_conf):
     with open(filename, "rt", encoding='utf8') as f:
         reader = csv.reader(f)
@@ -14,44 +13,50 @@ def apriori(filename, min_supp, min_conf):
             data.append(item)
     unique_data = list(dict.fromkeys(data))
 
-    supports = {}
-    count = 0
-    updated_data = []
+    supports = []
     data_size = len(data_list)
-    for item in unique_data:
-        item_count = sum(x.count(item) for x in data_list)
-        support = round((item_count / data_size) * 100, 2)
-        if support > min_supp:
-            supports.update({item: support})
-            updated_data.append(item)
 
-    combs = list(it.permutations(updated_data, 2))
-
+    combs = []
     updated_combs = []
-    conf = []
+    # perms = []
+    for i in range(1, 5):
+        combs.extend(map(list, (it.permutations(unique_data, i))))
+        # perms.extend(it.permutations(unique_data, i))
+
     for comb in combs:
         match_count = 0
         for item in data_list:
             if set(comb).issubset(item):
                 match_count += 1
+        row = 0
         if match_count > 0:
             support = round((match_count / data_size) * 100, 2)
             if support > min_supp:
-                supports.update({comb: support})
-                updated_combs.append(comb)
+                row = [comb, support]
+                supports.append(row)
 
-    confidences = {}
+    # print(supports)
+    updated_combs = [item[0] for item in supports]
+    # print(updated_combs)
+
+    confidence = 0
+    confidences = []
     for comb in updated_combs:
-        if set(comb).issubset(supports):
-            conf = round((supports[comb] / supports[comb[0]]) * 100, 2)
-            if conf > min_conf:
-                confidences.update({comb: conf})
-
+        den = 0
+        num = 0
+        if len(comb) > 1:
+            den = [i for i in supports if i[0] == comb[:-1]][0][1]
+            num = [i for i in supports if i[0] == comb][0][1]
+            confidence = round((num / den) * 100, 2)
+            if confidence > min_conf:
+                confidences.append([comb, confidence])
     print(confidences)
+    print('\n')
     print(supports)
+
 
     # filename = input("Enter the name of the transaction file: ")
     # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
     # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
     # apriori(filename, min_supp, min_conf)
-apriori('data1', 25, 50)
+apriori('data5', 10, 10)
