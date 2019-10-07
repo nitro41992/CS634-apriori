@@ -1,4 +1,5 @@
-X,Y,Z
-X,Z
-X,W
-Y,M,N
+Bread,Milk
+Bread,Diaper,Beer,Eggs
+Milk,Diaper,Beer,Coke
+Bread,Milk,Diaper,Beer
+Bread,Milk,Diaper,Coke 
