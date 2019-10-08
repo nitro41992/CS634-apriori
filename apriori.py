@@ -45,7 +45,15 @@ def apriori(filename, min_supp, min_conf):
         if prev_count - break_counter == 0:
             break
 
-        updated_combs = [item[0] for item in supports]
+        seen_it = set()
+        upd_sups = []
+        for line in supports:
+            key = frozenset(line[0])
+            if key not in seen_it:
+                seen_it.add(key)
+                upd_sups.append(line)
+
+        updated_combs = [item[0] for item in upd_sups]
 
         print('Calculating confidences...')
         confidence = 0
@@ -56,11 +64,11 @@ def apriori(filename, min_supp, min_conf):
             if size > 1:
                 for pos in range(size - 1, 0, -1):
 
-                    left = [i for i in supports if i[0] == comb[:-pos]][0][0]
-                    right = [i for i in supports if i[0] == comb[-pos:]][0][0]
+                    left = [i for i in upd_sups if i[0] == comb[:-pos]][0][0]
+                    right = [i for i in upd_sups if i[0] == comb[-pos:]][0][0]
 
-                    den = [i for i in supports if i[0] == comb[:-pos]][0][1]
-                    num = [i for i in supports if i[0] == comb][0][1]
+                    den = [i for i in upd_sups if i[0] == comb[:-pos]][0][1]
+                    num = [i for i in upd_sups if i[0] == comb][0][1]
 
                     confidence = round((num / den) * 100, 2)
                     if confidence > min_conf:
@@ -69,19 +77,11 @@ def apriori(filename, min_supp, min_conf):
 
         i += 1
 
-    seen_it = set()
-    distinct_supports = []
-    for line in supports:
-        key = frozenset(line[0])
-        if key not in seen_it:
-            seen_it.add(key)
-            distinct_supports.append(line)
-
     print('Generating confidences.csv and supports.csv...')
     with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(['Association', 'Support(%)'])
-        wr.writerows(distinct_supports)
+        wr.writerows(upd_sups)
 
     with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
