@@ -89,10 +89,10 @@ def apriori(filename, min_supp, min_conf):
         wr.writerows(confidences)
 
 
-# filename = input(
-#     "Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
-# min_supp = int(input("Enter the minimum support value (0 - 100%): "))
-# min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
-# apriori(filename, min_supp, min_conf)
-apriori('test.txt', 20, 40)
+filename = input(
+    "Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
+min_supp = int(input("Enter the minimum support value (0 - 100%): "))
+min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
+apriori(filename, min_supp, min_conf)
+
 print('Process completed.')
