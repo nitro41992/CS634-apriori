@@ -69,11 +69,19 @@ def apriori(filename, min_supp, min_conf):
 
         i += 1
 
+    seen_it = set()
+    distinct_supports = []
+    for line in supports:
+        key = frozenset(line[0])
+        if key not in seen_it:
+            seen_it.add(key)
+            distinct_supports.append(line)
+
     print('Generating confidences.csv and supports.csv...')
     with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(['Association', 'Support(%)'])
-        wr.writerows(supports)
+        wr.writerows(distinct_supports)
 
     with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
