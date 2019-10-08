@@ -24,13 +24,13 @@ def apriori(filename, min_supp, min_conf):
     confidences = []
 
     while True:
-        print(f'Generating association rules for sets of {i}') if i > 1 else print(
-            f'Generating association rules for initial set')
+        print(f' --------- Generating association rules for sets of {i} ---------') if i > 1 else print(
+            f' --------- Generating association rules for initial set ---------')
         # Calculate all permutations of unique items.
         combs.extend(map(list, (it.permutations(unique_data, i))))
 
-        print('Calculating supports...')
         # Setting parameter to check for additional itemsets that meet minimum support requirements.
+        print('Checking associations with dataset and calculatind supports...')
         break_counter = prev_count
         for comb in combs:
             match_count = 0
@@ -39,6 +39,7 @@ def apriori(filename, min_supp, min_conf):
                 if set(comb).issubset(item):
                     match_count += 1
             row = 0
+            
             if match_count > 0:
                 # Support calculation based on matches.
                 support = round((match_count / data_size) * 100, 2)
@@ -52,8 +53,10 @@ def apriori(filename, min_supp, min_conf):
 
         # Break of while loop if no additional itemsets meeting the minimum requirements are found.
         if prev_count - break_counter == 0:
+            print(f'No associations found for sets of {i} that meet the minimum requriements...')
             break
 
+        print('Removing redundant supports...')
         # Removal of redundant support itemsets.
         seen_it = set()
         upd_sups = []
@@ -91,19 +94,19 @@ def apriori(filename, min_supp, min_conf):
                         confidences.append(
                             [f'{{{", ".join(left)}}} -> {{{", ".join(right)}}}', confidence])
 
+        # Writing supports and confidences to csv
+        print('Generating confidences.csv and supports.csv...')
+        with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
+            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            wr.writerow(['Association', 'Support(%)'])
+            wr.writerows(upd_sups)
+
+        with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
+            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            wr.writerow(['Association', 'Confidence(%)'])
+            wr.writerows(confidences)
+                
         i += 1
-
-    # Writing supports and confidences to csv
-    print('Generating confidences.csv and supports.csv...')
-    with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
-        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-        wr.writerow(['Association', 'Support(%)'])
-        wr.writerows(upd_sups)
-
-    with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
-        wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-        wr.writerow(['Association', 'Confidence(%)'])
-        wr.writerows(confidences)
 
 
 # User inputs.
