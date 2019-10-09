@@ -1,20 +1,20 @@
-1,Apple,Vitamin
-2,Vitamin,Cereal,Egg,Milk,Apple,Beer
-3,Chip,Milk
-4,Beer,Vitamin
-5,Egg,Cereal,Milk,Chip
-6,Apple,Chip,Vitamin,Diaper,Beer,Milk
-7,Egg,Apple,Cereal,Paper towel,Diaper
-8,Apple,Cereal
-9,Cereal,Milk,Ice cream,Diaper,Vitamin
-10,Diaper,Apple,Ice cream,Chip
-11,Cereal,Apple,Diaper,Milk,Egg
-12,Milk,Paper towel
-13,Ice cream,Apple
-14,Milk,Diaper,Ice cream,Apple,Egg,Beer
-15,Apple,Diaper
-16,Milk,Egg,Chip,Beer
-17,Chip
-18,Apple,Vitamin,Milk,Diaper
-19,Vitamin,Egg
-20,Egg,Milk,Chip,Paper towel,Ice cream,Diaper
+1,Grapes,Juice
+2,Juice,Cereal,Eggs,Milk,Grapes,Wine
+3,Chips,Milk
+4,Wine,Juice
+5,Eggs,Cereal,Milk,Chips
+6,Grapes,Chips,Juice,Diaper,Wine,Milk
+7,Eggs,Grapes,Cereal,Napkins,Diaper
+8,Grapes,Cereal
+9,Cereal,Milk,Ice cream,Diaper,Juice
+10,Diaper,Grapes,Ice cream,Chips
+11,Cereal,Grapes,Diaper,Milk,Eggs
+12,Milk,Napkins
+13,Ice cream,Grapes
+14,Milk,Diaper,Ice cream,Grapes,Eggs,Wine
+15,Grapes,Diaper
+16,Milk,Eggs,Chips,Wine
+17,Chips
+18,Grapes,Juice,Milk,Diaper
+19,Juice,Eggs
+20,Eggs,Milk,Chips,Napkins,Ice cream,Diaper

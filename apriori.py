@@ -26,6 +26,8 @@ def apriori(filename, min_supp, min_conf):
     prev_count = 0
     confidences = []
 
+    print(unique_data)
+
     while i <= max_length:
         print(f' --------- Generating association rules for sets of {i} ---------') if i > 1 else print(
             f' --------- Generating association rules for initial set ---------')
