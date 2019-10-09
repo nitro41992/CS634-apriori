@@ -10,8 +10,11 @@ def apriori(filename, min_supp, min_conf):
 
     # Use dictionary to identify unique data for permutation calculation.
     data = []
+    max_length = 0
     for line in data_list:
-        for item in line:
+        if len(line[1:]) > max_length:
+            max_length = len(line[1:])
+        for item in line[1:]:
             data.append(item)
     unique_data = list(dict.fromkeys(data))
 
@@ -23,11 +26,12 @@ def apriori(filename, min_supp, min_conf):
     prev_count = 0
     confidences = []
 
-    while True:
+    while i <= max_length:
         print(f' --------- Generating association rules for sets of {i} ---------') if i > 1 else print(
             f' --------- Generating association rules for initial set ---------')
         # Calculate all permutations of unique items.
-        combs.extend(map(list, (it.permutations(unique_data, i))))
+        combs.extend(map(list, (it.product(unique_data, repeat=i))))
+        print('combinations found....')
 
         # Setting parameter to check for additional itemsets that meet minimum support requirements.
         print('Checking associations with dataset and calculatind supports...')
@@ -36,24 +40,24 @@ def apriori(filename, min_supp, min_conf):
             match_count = 0
             # Checking each combination in the data list to get respective supports.
             for item in data_list:
-                if set(comb).issubset(item):
+                if all(x in item for x in comb):
                     match_count += 1
+
             row = 0
-            
             if match_count > 0:
                 # Support calculation based on matches.
                 support = round((match_count / data_size) * 100, 2)
 
                 # Check to append to supports list only if minumum support requirement is met and if row does not already exist.
                 row = [comb, support]
-                check = any(row == sl for sl in supports)
-                if support > min_supp and check == False:
+                if support > min_supp:
                     supports.append(row)
                     prev_count += 1
 
         # Break of while loop if no additional itemsets meeting the minimum requirements are found.
         if prev_count - break_counter == 0:
-            print(f'No associations found for sets of {i} that meet the minimum requriements...')
+            print(
+                f'No associations found for sets of {i} that meet the minimum requriements...')
             break
 
         print('Removing redundant supports...')
@@ -105,7 +109,7 @@ def apriori(filename, min_supp, min_conf):
             wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
             wr.writerow(['Association', 'Confidence(%)'])
             wr.writerows(confidences)
-                
+
         i += 1
 
 
