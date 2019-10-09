@@ -104,8 +104,9 @@ def apriori(filename, min_supp, min_conf):
                         confidences.append(
                             [f'{{{", ".join(left)}}} -> {{{", ".join(right)}}}', confidence])
 
-        # print('Removing redundant confidences...')
-        # upd_confidences = remove_duplicates(confidences)
+        print('Removing redundant confidences...')
+        upd_confidences = set(tuple(x) for x in confidences)
+        b = [ list(x) for x in upd_confidences ]
 
         # Writing supports and confidences to csv
         print('Generating confidences.csv and supports.csv...')
@@ -117,7 +118,7 @@ def apriori(filename, min_supp, min_conf):
         with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
             wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
             wr.writerow(['Association', 'Confidence(%)'])
-            wr.writerows(confidences)
+            wr.writerows(upd_confidences)
 
         i += 1
 
