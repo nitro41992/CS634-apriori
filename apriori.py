@@ -1,6 +1,19 @@
 import itertools as it
 import csv
 
+# Removal of redundant support itemsets.
+
+
+def remove_duplicates(nested_list):
+    seen_it = set()
+    upd_list = []
+    for line in nested_list:
+        key = frozenset(line[0])
+        if key not in seen_it:
+            seen_it.add(key)
+            upd_list.append(line)
+    return upd_list
+
 
 def apriori(filename, min_supp, min_conf):
     # Open data file and convert to list.
@@ -61,14 +74,7 @@ def apriori(filename, min_supp, min_conf):
             break
 
         print('Removing redundant supports...')
-        # Removal of redundant support itemsets.
-        seen_it = set()
-        upd_sups = []
-        for line in supports:
-            key = frozenset(line[0])
-            if key not in seen_it:
-                seen_it.add(key)
-                upd_sups.append(line)
+        upd_sups = remove_duplicates(supports)
 
         # Isolation of unique itemsets for confidence calculation
         updated_combs = [item[0] for item in upd_sups]
@@ -98,6 +104,9 @@ def apriori(filename, min_supp, min_conf):
                         confidences.append(
                             [f'{{{", ".join(left)}}} -> {{{", ".join(right)}}}', confidence])
 
+        print('Removing redundant confidences...')
+        upd_confidences = remove_duplicates(confidences)
+
         # Writing supports and confidences to csv
         print('Generating confidences.csv and supports.csv...')
         with open('supports.csv', 'w', newline='\n', encoding='utf-8') as myfile:
@@ -108,7 +117,7 @@ def apriori(filename, min_supp, min_conf):
         with open('confidences.csv', 'w', newline='\n', encoding='utf-8') as myfile:
             wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
             wr.writerow(['Association', 'Confidence(%)'])
-            wr.writerows(confidences)
+            wr.writerows(upd_confidences)
 
         i += 1
 
