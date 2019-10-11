@@ -27,7 +27,10 @@ def check_support(combinations, data_list, min_supp):
         match_count = 0
         # Checking each combination in the data list to get respective supports.
         for item in data_list:
-            if all(x in item for x in comb):
+            # print('item: ', item)
+            # print('comb: ', comb)
+            # if all(x in item for x in [comb]):
+            if comb in item or set(comb).issubset(item):
                 match_count += 1
 
         row = 0
@@ -36,7 +39,10 @@ def check_support(combinations, data_list, min_supp):
             support = round((match_count / data_size) * 100, 2)
 
             # Check to append to supports list only if minumum support requirement is met and if row does not already exist.
-            row = [list(comb), support]
+            if isinstance(comb, str):
+                row = [[comb], support]
+            else:
+                row = [comb, support]
             if support > min_supp:
                 supports.append(row)
                 met_combs.append(comb)
@@ -49,7 +55,12 @@ def apriori(filename, min_supp, min_conf):
     # Open data file and convert to list.
     with open(filename, "rt", encoding='utf8') as f:
         reader = csv.reader(f)
-        data_list = list(reader)
+        temp = list(reader)
+
+    data_list = []
+    for row in temp:
+        data_list.append(row[1:])
+    # print(data_list)
 
     # Use dictionary to identify unique data for permutation calculation.
     data = []
@@ -57,9 +68,10 @@ def apriori(filename, min_supp, min_conf):
     for line in data_list:
         if len(line[1:]) > max_length:
             max_length = len(line[1:])
-        for item in line[1:]:
+        for item in line:
             data.append(item)
     unique_data = list(dict.fromkeys(data))
+    # print(unique_data)
 
     supports = []
     met_combs = []
@@ -77,13 +89,18 @@ def apriori(filename, min_supp, min_conf):
         print('Checking associations with dataset and calculatind supports...')
         supports, met_combs = check_support(unique_data, data_list, min_supp)
 
+        # Creating second order itemsets
         combs.extend(list(map(list, (it.combinations(met_combs, 2)))))
+        # to_csv('combs.csv', 'Out', combs)
+
+        # Re-calculating supports for higher order itemsets
         supports.extend(check_support(combs, data_list, min_supp)[0])
         met_combs.extend(check_support(combs, data_list, min_supp)[1])
 
         updated_combs = merge(met_combs[(len(unique_data) - 1):], 1)
         supports.extend(check_support(updated_combs, data_list, min_supp)[0])
         met_combs.extend(check_support(updated_combs, data_list, min_supp)[1])
+        # print(supports)
 
         # Writing supports to csv
         to_csv('supports.csv', 'Supports(%)', supports)
@@ -91,52 +108,69 @@ def apriori(filename, min_supp, min_conf):
         print('Calculating confidences...')
         # Loop through unique itemsets to calculate confidence.
         confidence = 0
+        perms = []
         for comb in met_combs:
             den = 0
             num = 0
             size = len(comb)
+
+            # print('comb: ', comb)
             # Check to make sure itemsets have more than one item in order to isolate associations itemsets.
-            if size > 1:
-                pass
-                # Iterating based on itemset size in order to calculate respective supports for subset associations.
-                for pos in range(size - 1, 0, -1):
-                    # Gathering left item(s) and right item(s) of each respective association
-                    left = [i for i in supports if i[0] == comb[:-pos]][0][0]
-                    right = [i for i in supports if i[0] == comb[-pos:]][0][0]
-                    print('Comb', comb)
-                    print('Comb Left: ', left)
-                    print('Comb Right: ', right)
-                    # Gathering the support percentages for the numerator and denominator based on the confidence formula.
-                    den = [i for i in supports if i[0] == comb[:-pos]][0][1]
-                    num = [i for i in supports if i[0] == comb][0][1]
+            if size > 1 and isinstance(comb, str) == False:
+                perms = list(map(list, (it.permutations(comb, len(comb)))))
+                # print(perms)
+                for i in range(len(perms)):
+                    for j in range(1, len(perms[i])):
 
-                    print('Den: ', den)
-                    print('Num: ', num)
-                    # Confidence calculation.
-                    confidence = round((num / den) * 100, 2)
-                    if confidence > min_conf:
+                        den = [x for x in supports if sorted(x[0])
+                               == sorted(perms[i][:j])][0][1]
+                        num = [x for x in supports if sorted(x[0])
+                               == sorted(perms[i])][0][1]
+
+                        confidence = round(((num/den) * 100), 2)
+
                         confidences.append(
-                            [f'{left} -> {right}', confidence])
+                            [f'{perms[i][:j]} -> {perms[i][j:]}', confidence])
 
-        print('Removing redundant confidences...')
-        upd_confidences = set(tuple(x) for x in confidences)
-        b = [list(x) for x in upd_confidences]
+        # Iterating based on itemset size in order to calculate respective supports for subset associations.
+        # for pos in range(size - 1, 0, -1):
+        #     pass
+        # Gathering left item(s) and right item(s) of each respective association
+        # left = [i for i in supports if i[0] == comb[:-pos]][0][0]
+        # right = [i for i in supports if i[0] == comb[-pos:]][0][0]
+        # print('Comb Left: ', left)
+        # print('Comb Right: ', right)
+
+        # Gathering the support percentages for the numerator and denominator based on the confidence formula.
+        #             den = [i for i in supports if i[0] == comb[:-pos]][0][1]
+        #             num = [i for i in supports if i[0] == comb][0][1]
+
+        #             print('Den: ', den)
+        #             print('Num: ', num)
+        #             # Confidence calculation.
+        #             confidence = round((num / den) * 100, 2)
+        #             if confidence > min_conf:
+        #                 confidences.append(
+        #                     [f'{left} -> {right}', confidence])
+
+        # print('Removing redundant confidences...')
+        # upd_confidences = set(tuple(x) for x in confidences)
+        # b = [list(x) for x in upd_confidences]
 
         # Writing confidences to csv
-        to_csv('confidences.csv', 'Confidences(%)', upd_confidences)
+        to_csv('confidences.csv', 'Confidences(%)', confidences)
 
         # i += 1
         break
 
+        # User inputs.
+        # filename = input(
+        #     "Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
+        # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
+        # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
 
-# User inputs.
-# filename = input(
-#     "Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
-# min_supp = int(input("Enter the minimum support value (0 - 100%): "))
-# min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
-
-# Running apriori function
-# apriori(filename, min_supp, min_conf)
-apriori('test.txt', 30, 10)
+        # Running apriori function
+        # apriori(filename, min_supp, min_conf)
+apriori('data5.txt', 10, 10)
 
 print('Process completed.')
