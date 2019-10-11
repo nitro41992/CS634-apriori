@@ -19,7 +19,9 @@ def to_csv(filename, output_header, nested_list):
 
 
 def check_support(combinations, data_list, min_supp):
+    # prev_count = 0
     # break_counter = prev_count
+    new_count = 0
     supports = []
     met_combs = []
     data_size = len(data_list)
@@ -27,9 +29,7 @@ def check_support(combinations, data_list, min_supp):
         match_count = 0
         # Checking each combination in the data list to get respective supports.
         for item in data_list:
-            # print('item: ', item)
-            # print('comb: ', comb)
-            # if all(x in item for x in [comb]):
+
             if comb in item or set(comb).issubset(item):
                 match_count += 1
 
@@ -46,9 +46,9 @@ def check_support(combinations, data_list, min_supp):
             if support > min_supp:
                 supports.append(row)
                 met_combs.append(comb)
-                # prev_count += 1
+                new_count += 1
 
-    return supports, met_combs
+    return supports, met_combs, new_count
 
 
 def apriori(filename, min_supp, min_conf):
@@ -60,7 +60,6 @@ def apriori(filename, min_supp, min_conf):
     data_list = []
     for row in temp:
         data_list.append(row[1:])
-    # print(data_list)
 
     # Use dictionary to identify unique data for permutation calculation.
     data = []
@@ -71,36 +70,39 @@ def apriori(filename, min_supp, min_conf):
         for item in line:
             data.append(item)
     unique_data = list(dict.fromkeys(data))
-    # print(unique_data)
 
     supports = []
     met_combs = []
     combs = []
-    updated_combs = []
-    i = 1
     prev_count = 0
+    updated_combs = []
+    c = 1
     confidences = []
 
+    # Setting parameter to check for additional itemsets that meet minimum support requirements.
+    print('Checking associations with dataset and calculating supports for 1st and 2nd itemsets...')
+    supports, met_combs, prev_count = check_support(
+        unique_data, data_list, min_supp)
+
+    # Creating second order itemsets
+    combs.extend(list(map(list, (it.combinations(met_combs, 2)))))
+
+    # Re-calculating supports for higher order itemsets
+    supports.extend(check_support(combs, data_list, min_supp)[0])
+    met_combs.extend(check_support(combs, data_list, min_supp)[1])
+
     while True:
-        print(f' --------- Generating association rules for sets of {i} ---------') if i > 1 else print(
-            f' --------- Generating association rules for initial set ---------')
+        break_count = prev_count
+        print(
+            f' --------- Generating association rules for sets of {c + 2} ---------')
 
-        # Setting parameter to check for additional itemsets that meet minimum support requirements.
-        print('Checking associations with dataset and calculatind supports...')
-        supports, met_combs = check_support(unique_data, data_list, min_supp)
-
-        # Creating second order itemsets
-        combs.extend(list(map(list, (it.combinations(met_combs, 2)))))
-        # to_csv('combs.csv', 'Out', combs)
-
-        # Re-calculating supports for higher order itemsets
-        supports.extend(check_support(combs, data_list, min_supp)[0])
-        met_combs.extend(check_support(combs, data_list, min_supp)[1])
-
-        updated_combs = merge(met_combs[(len(unique_data) - 1):], 1)
+        updated_combs = merge(met_combs[(len(unique_data) - 1):], c)
         supports.extend(check_support(updated_combs, data_list, min_supp)[0])
         met_combs.extend(check_support(updated_combs, data_list, min_supp)[1])
-        # print(supports)
+        prev_count = check_support(updated_combs, data_list, min_supp)[2]
+
+        if prev_count - break_count == 0:
+            break
 
         # Writing supports to csv
         to_csv('supports.csv', 'Supports(%)', supports)
@@ -114,14 +116,13 @@ def apriori(filename, min_supp, min_conf):
             num = 0
             size = len(comb)
 
-            # print('comb: ', comb)
             # Check to make sure itemsets have more than one item in order to isolate associations itemsets.
             if size > 1 and isinstance(comb, str) == False:
                 perms = list(map(list, (it.permutations(comb, len(comb)))))
-                # print(perms)
+
                 for i in range(len(perms)):
                     for j in range(1, len(perms[i])):
-
+                        print(perms[i][:j])
                         den = [x for x in supports if sorted(x[0])
                                == sorted(perms[i][:j])][0][1]
                         num = [x for x in supports if sorted(x[0])
@@ -135,8 +136,7 @@ def apriori(filename, min_supp, min_conf):
         # Writing confidences to csv
         to_csv('confidences.csv', 'Confidences(%)', confidences)
 
-        # i += 1
-        break
+        c += 1
 
         # User inputs.
         # filename = input(
@@ -144,9 +144,8 @@ def apriori(filename, min_supp, min_conf):
         # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
         # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
 
-
         # Running apriori function
         # apriori(filename, min_supp, min_conf)
-apriori('data2.txt', 10, 90)
+apriori('data5.txt', 10, 10)
 
 print('Process completed.')
