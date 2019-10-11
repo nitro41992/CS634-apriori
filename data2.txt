@@ -2,15 +2,15 @@
 2,Wine,Grapes,Ice cream,Juice,Napkins,Eggs
 3,Eggs,Napkins,Milk,Grapes
 4,Napkins
-5,Eggs,Wine
+5,Eggs,Wine,Grapes,Napkins
 6,Juice
 7,Eggs
 8,Milk,Diaper,Chips,Cereal
 9,Milk,Diaper,Grapes,Napkins,Cereal
 10,Wine,Grapes,Cereal,Diaper,Chips,Napkins
 11,Grapes,Eggs
-12,Eggs,Wine,Grapes,Diaper
-13,Cereal,Napkins,Ice cream,Wine
+12,Eggs,Wine,Grapes,Diaper,Napkins
+13,Cereal,Napkins,Ice cream,Wine,Grapes
 14,Napkins,Juice,Cereal
 15,Milk,Grapes,Chips,Ice cream
 16,Cereal,Ice cream,Chips,Grapes
