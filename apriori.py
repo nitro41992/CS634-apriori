@@ -137,21 +137,25 @@ def apriori(filename, min_supp, min_conf):
         b = [list(x) for x in upd_confidences]
 
         # Writing confidences to csv
-        to_csv('confidences.csv', 'Confidence (%)', upd_confidences
-               )
+        to_csv('confidences.csv', 'Confidence (%)', upd_confidences)
+
         if prev_count - break_count == 0 or c == max_length:
             break
 
         c += 1
 
-        # User inputs.
-        # filename = input(
-        #     "Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
-        # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
-        # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
 
-        # Running apriori function
-        # apriori(filename, min_supp, min_conf)
-apriori('data5.txt', 10, 10)
+# User inputs.
+filename = input(
+    "Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
+min_supp = int(input("Enter the minimum support value (0 - 100%): "))
+min_conf = int(
+    input("Enter the minimum confidence value (0 - 100%): "))
+
+# Running apriori function
+apriori(filename, min_supp, min_conf)
+
+
+# apriori('data5.txt', 10, 10)
 
 print('Process completed.')
