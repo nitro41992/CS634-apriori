@@ -6,7 +6,7 @@ def merge(lists, n):
     resultslist = []  # Create the empty result list.
     for x in range(len(lists)):
         for y in range(x+1, len(lists)):
-            if sorted(lists[x][0:n]) == sorted(lists[y][0:n]):
+            if sorted(lists[x][0:n]) == sorted(lists[y][0:n]) and sorted(lists[x]) != sorted(lists[y]):
                 resultslist.append(lists[x] + lists[y][-1:])
     return(resultslist)
 
@@ -93,36 +93,35 @@ def apriori(filename, min_supp, min_conf):
 
     while True:
         break_count = prev_count
-        print(
-            f' --------- Generating association rules for sets of {c + 2} ---------')
+        print(f'Generating association rules for itemsets of {c + 2}...')
 
         updated_combs = merge(met_combs[(len(unique_data) - 1):], c)
+
         supports.extend(check_support(updated_combs, data_list, min_supp)[0])
         met_combs.extend(check_support(updated_combs, data_list, min_supp)[1])
         prev_count = check_support(updated_combs, data_list, min_supp)[2]
 
-        if prev_count - break_count == 0:
-            break
-
         # Writing supports to csv
         to_csv('supports.csv', 'Supports(%)', supports)
 
-        print('Calculating confidences...')
+        print(f'Calculating confidences for itemsets of {c + 2}...')
         # Loop through unique itemsets to calculate confidence.
         confidence = 0
         perms = []
         for comb in met_combs:
             den = 0
             num = 0
-            size = len(comb)
-
+            if isinstance(comb, str):
+                size = 1
+            else:
+                size = len(comb)
             # Check to make sure itemsets have more than one item in order to isolate associations itemsets.
-            if size > 1 and isinstance(comb, str) == False:
-                perms = list(map(list, (it.permutations(comb, len(comb)))))
-
+            if size > 1 and isinstance(comb, str) == False and size <= max_length:
+                perms = list(map(list, (it.permutations(comb, size))))
+                # to_csv('Perms.csv', 'Out', perms)
                 for i in range(len(perms)):
                     for j in range(1, len(perms[i])):
-                        print(perms[i][:j])
+                        # print(perms[i][:j])
                         den = [x for x in supports if sorted(x[0])
                                == sorted(perms[i][:j])][0][1]
                         num = [x for x in supports if sorted(x[0])
@@ -135,6 +134,9 @@ def apriori(filename, min_supp, min_conf):
 
         # Writing confidences to csv
         to_csv('confidences.csv', 'Confidences(%)', confidences)
+
+        if prev_count - break_count == 0:
+            break
 
         c += 1
 
