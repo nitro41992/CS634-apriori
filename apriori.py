@@ -132,11 +132,13 @@ def apriori(filename, min_supp, min_conf):
                             confidences.append(
                                 [f'{perms[i][:j]} -> {perms[i][j:]}', confidence])
 
-        # Writing confidences to csv
-        to_csv('confidences.csv', 'Confidences(%)', confidences)
-        print('c: ', c)
-        print('max length: ', max_length)
+        print('Removing redundant confidences...')
+        upd_confidences = set(tuple(x) for x in confidences)
+        b = [list(x) for x in upd_confidences]
 
+        # Writing confidences to csv
+        to_csv('confidences.csv', 'Confidence (%)', upd_confidences
+               )
         if prev_count - break_count == 0 or c == max_length:
             break
 
