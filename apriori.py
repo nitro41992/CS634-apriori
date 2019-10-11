@@ -1,14 +1,18 @@
 import itertools as it
 import csv
 
+# Pruning and merging based on similarities between same order itemsets
+
 
 def merge(lists, n):
-    resultslist = []  # Create the empty result list.
+    resultslist = []
     for x in range(len(lists)):
         for y in range(x+1, len(lists)):
             if sorted(lists[x][0:n]) == sorted(lists[y][0:n]) and sorted(lists[x]) != sorted(lists[y]):
                 resultslist.append(lists[x] + lists[y][-1:])
     return(resultslist)
+
+# create csv from data list
 
 
 def to_csv(filename, output_header, nested_list):
@@ -17,17 +21,17 @@ def to_csv(filename, output_header, nested_list):
         wr.writerow(['Association', output_header])
         wr.writerows(nested_list)
 
+# Calculate support for all combinations in datalist anc check minimum support requirements
+
 
 def check_support(combinations, data_list, min_supp):
-    # prev_count = 0
-    # break_counter = prev_count
     new_count = 0
     supports = []
     met_combs = []
     data_size = len(data_list)
     for comb in combinations:
         match_count = 0
-        # Checking each combination in the data list to get respective supports.
+        # Checking each combination in the data list to get respective supports
         for item in data_list:
 
             if comb in item or set(comb).issubset(item):
@@ -38,7 +42,7 @@ def check_support(combinations, data_list, min_supp):
             # Support calculation based on matches.
             support = round((match_count / data_size) * 100, 2)
 
-            # Check to append to supports list only if minumum support requirement is met and if row does not already exist.
+            # Check to append to supports list only if minumum support requirement is met and if row does not already exist
             if isinstance(comb, str):
                 row = [[comb], support]
             else:
@@ -61,7 +65,7 @@ def apriori(filename, min_supp, min_conf):
     for row in temp:
         data_list.append(row[1:])
 
-    # Use dictionary to identify unique data for permutation calculation.
+    # Use dictionary to identify unique data for permutation calculation
     data = []
     max_length = 0
     for line in data_list:
@@ -79,7 +83,7 @@ def apriori(filename, min_supp, min_conf):
     c = 3
     confidences = []
 
-    # Setting parameter to check for additional itemsets that meet minimum support requirements.
+    # Creating data list for itemsets with support values as well as a data list for isolating itemsets for confidence calculations
     print('Checking associations with dataset and calculating supports for 1st and 2nd itemsets...')
     supports, met_combs, prev_count = check_support(
         unique_data, data_list, min_supp)
@@ -87,7 +91,7 @@ def apriori(filename, min_supp, min_conf):
     # Creating second order itemsets
     combs.extend(list(map(list, (it.combinations(met_combs, 2)))))
 
-    # Re-calculating supports for higher order itemsets
+    # Re-calculating supports for 2nd order itemsets
     supports.extend(check_support(combs, data_list, min_supp)[0])
     met_combs.extend(check_support(combs, data_list, min_supp)[1])
 
@@ -95,8 +99,11 @@ def apriori(filename, min_supp, min_conf):
         break_count = prev_count
         print(f'Generating association rules for itemsets of {c}...')
 
+        # Runnin merge function as part of the pruning process to create higher order itemsets
         updated_combs = merge(met_combs[(len(unique_data) - 1):], c - 2)
 
+        # Re-calculating supports for higher order itemsets
+        # Checking to make sure new supports are created for each iteration
         supports.extend(check_support(updated_combs, data_list, min_supp)[0])
         met_combs.extend(check_support(updated_combs, data_list, min_supp)[1])
         prev_count = check_support(updated_combs, data_list, min_supp)[2]
@@ -105,7 +112,7 @@ def apriori(filename, min_supp, min_conf):
         to_csv('supports.csv', 'Supports(%)', supports)
 
         print(f'Calculating confidences for itemsets of {c}...')
-        # Loop through unique itemsets to calculate confidence.
+        # Loop through unique itemsets to calculate confidence
         confidence = 0
         perms = []
         for comb in met_combs:
@@ -115,24 +122,25 @@ def apriori(filename, min_supp, min_conf):
                 size = 1
             else:
                 size = len(comb)
-            # Check to make sure itemsets have more than one item in order to isolate associations itemsets.
+            # Check to make sure itemsets have more than one item in order to isolate associations itemsets
             if size > 1 and isinstance(comb, str) == False and size <= max_length:
+                # Creating permutations based off of itemsets in order to create all association combinations
                 perms = list(map(list, (it.permutations(comb, size))))
-                # to_csv('Perms.csv', 'Out', perms)
+
                 for i in range(len(perms)):
                     for j in range(1, len(perms[i])):
-                        # print(perms[i][:j])
+                        # Isolating the left and right of each association and calculating the confidence
                         den = [x for x in supports if sorted(x[0])
                                == sorted(perms[i][:j])][0][1]
                         num = [x for x in supports if sorted(x[0])
                                == sorted(perms[i])][0][1]
-
+                        # Making sure confidence meets the minimum requirements
                         confidence = round(((num/den) * 100), 2)
                         if confidence > min_conf:
                             confidences.append(
                                 [f'{perms[i][:j]} -> {perms[i][j:]}', confidence])
 
-        print('Removing redundant confidences...')
+        # Removing redundant confidence permutations
         upd_confidences = set(tuple(x) for x in confidences)
         b = [list(x) for x in upd_confidences]
 
@@ -145,7 +153,7 @@ def apriori(filename, min_supp, min_conf):
         c += 1
 
 
-# User inputs.
+# User inputs
 filename = input(
     "Enter the name of the transaction file. Include the file extension. (eg. \".txt\") : ")
 min_supp = int(input("Enter the minimum support value (0 - 100%): "))
@@ -154,8 +162,5 @@ min_conf = int(
 
 # Running apriori function
 apriori(filename, min_supp, min_conf)
-
-
-# apriori('data5.txt', 10, 10)
 
 print('Process completed.')
