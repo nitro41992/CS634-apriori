@@ -128,34 +128,9 @@ def apriori(filename, min_supp, min_conf):
                                == sorted(perms[i])][0][1]
 
                         confidence = round(((num/den) * 100), 2)
-
-                        confidences.append(
-                            [f'{perms[i][:j]} -> {perms[i][j:]}', confidence])
-
-        # Iterating based on itemset size in order to calculate respective supports for subset associations.
-        # for pos in range(size - 1, 0, -1):
-        #     pass
-        # Gathering left item(s) and right item(s) of each respective association
-        # left = [i for i in supports if i[0] == comb[:-pos]][0][0]
-        # right = [i for i in supports if i[0] == comb[-pos:]][0][0]
-        # print('Comb Left: ', left)
-        # print('Comb Right: ', right)
-
-        # Gathering the support percentages for the numerator and denominator based on the confidence formula.
-        #             den = [i for i in supports if i[0] == comb[:-pos]][0][1]
-        #             num = [i for i in supports if i[0] == comb][0][1]
-
-        #             print('Den: ', den)
-        #             print('Num: ', num)
-        #             # Confidence calculation.
-        #             confidence = round((num / den) * 100, 2)
-        #             if confidence > min_conf:
-        #                 confidences.append(
-        #                     [f'{left} -> {right}', confidence])
-
-        # print('Removing redundant confidences...')
-        # upd_confidences = set(tuple(x) for x in confidences)
-        # b = [list(x) for x in upd_confidences]
+                        if confidence > min_conf:
+                            confidences.append(
+                                [f'{perms[i][:j]} -> {perms[i][j:]}', confidence])
 
         # Writing confidences to csv
         to_csv('confidences.csv', 'Confidences(%)', confidences)
@@ -169,8 +144,9 @@ def apriori(filename, min_supp, min_conf):
         # min_supp = int(input("Enter the minimum support value (0 - 100%): "))
         # min_conf = int(input("Enter the minimum confidence value (0 - 100%): "))
 
+
         # Running apriori function
         # apriori(filename, min_supp, min_conf)
-apriori('data5.txt', 10, 10)
+apriori('data2.txt', 10, 90)
 
 print('Process completed.')
