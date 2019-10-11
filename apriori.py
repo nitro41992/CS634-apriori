@@ -1,27 +1,14 @@
 import itertools as it
 import csv
 
-# Removal of redundant support itemsets.
 
-
-def remove_duplicates(nested_list):
-    seen_it = set()
-    upd_list = []
-    for line in nested_list:
-        key = frozenset(line[0])
-        if key not in seen_it:
-            seen_it.add(key)
-            upd_list.append(line)
-    return upd_list
-
-
-def merge(lists):
+def merge(lists, n):
     resultslist = []  # Create the empty result list.
-    lists = sorted([sorted(x) for x in lists])
-
-    for item in lists:
-        for sub in item:
-            print([x for x in lists if sub in x[0]])
+    for x in range(len(lists)):
+        for y in range(x+1, len(lists)):
+            if sorted(lists[x][0:n]) == sorted(lists[y][0:n]):
+                resultslist.append(lists[x] + lists[y][-1:])
+    return(resultslist)
 
 
 def to_csv(filename, output_header, nested_list):
@@ -49,7 +36,7 @@ def check_support(combinations, data_list, min_supp):
             support = round((match_count / data_size) * 100, 2)
 
             # Check to append to supports list only if minumum support requirement is met and if row does not already exist.
-            row = [comb, support]
+            row = [list(comb), support]
             if support > min_supp:
                 supports.append(row)
                 met_combs.append(comb)
@@ -93,20 +80,22 @@ def apriori(filename, min_supp, min_conf):
         combs.extend(list(map(list, (it.combinations(met_combs, 2)))))
         supports.extend(check_support(combs, data_list, min_supp)[0])
         met_combs.extend(check_support(combs, data_list, min_supp)[1])
-        print(supports)
-        print(met_combs[(len(unique_data) - 1):])
+        # print(supports)
+        # print(met_combs[(len(unique_data) - 1):])
 
-        updated_combs.extend(merge(met_combs[(len(unique_data) - 1):]))
-        print(updated_combs)
+        updated_combs = merge(met_combs[(len(unique_data) - 1):], 1)
+        supports.extend(check_support(updated_combs, data_list, min_supp)[0])
+        met_combs.extend(check_support(updated_combs, data_list, min_supp)[1])
+        # print(supports)
+        # print(updated_combs)
 
-        # # Isolation of unique itemsets for confidence calculation
-        # updated_combs = [item[0] for item in upd_sups]
-        # to_csv('combs.csv', 'combs', updated_combs)
+        # Writing supports to csv
+        to_csv('supports.csv', 'Supports(%)', supports)
 
         print('Calculating confidences...')
         # Loop through unique itemsets to calculate confidence.
         confidence = 0
-        for comb in updated_combs:
+        for comb in met_combs:
             den = 0
             num = 0
             size = len(comb)
@@ -114,31 +103,31 @@ def apriori(filename, min_supp, min_conf):
             if size > 1:
                 pass
                 # Iterating based on itemset size in order to calculate respective supports for subset associations.
-                # for pos in range(size - 1, 0, -1):
-                #     # Gathering left item(s) and right item(s) of each respective association
-                #     left = [i for i in upd_sups if i[0] == comb[:-pos]][0][0]
-                #     right = [i for i in upd_sups if i[0] == comb[-pos:]][0][0]
+                for pos in range(size - 1, 0, -1):
+                    # Gathering left item(s) and right item(s) of each respective association
+                    left = [i for i in supports if i[0] == comb[:-pos]][0][0]
+                    right = [i for i in supports if i[0] == comb[-pos:]][0][0]
+                    print('Comb', comb)
+                    print('Comb Left: ', left)
+                    print('Comb Right: ', right)
+                    # Gathering the support percentages for the numerator and denominator based on the confidence formula.
+                    den = [i for i in supports if i[0] == comb[:-pos]][0][1]
+                    num = [i for i in supports if i[0] == comb][0][1]
 
-                #     print('Comb: ', comb)
-                #     print('Comb Left: ', comb[:-pos])
-                #     print('Comb Right: ', comb[-pos:])
-                #     # Gathering the support percentages for the numerator and denominator based on the confidence formula.
-                #     den = [i for i in upd_sups if i[0] == comb[:-pos]][0][1]
-                #     num = [i for i in upd_sups if i[0] == comb][0][1]
+                    print('Den: ', den)
+                    print('Num: ', num)
+                    # Confidence calculation.
+                    confidence = round((num / den) * 100, 2)
+                    if confidence > min_conf:
+                        confidences.append(
+                            [f'{{{left}}} -> {{{right}}}', confidence])
 
-                #     # Confidence calculation.
-                #     confidence = round((num / den) * 100, 2)
-                #     if confidence > min_conf:
-                #         confidences.append(
-                #             [f'{{{", ".join(left)}}} -> {{{", ".join(right)}}}', confidence])
+        print('Removing redundant confidences...')
+        upd_confidences = set(tuple(x) for x in confidences)
+        b = [list(x) for x in upd_confidences]
 
-        # print('Removing redundant confidences...')
-        # upd_confidences = set(tuple(x) for x in confidences)
-        # b = [list(x) for x in upd_confidences]
-
-        # Writing supports and confidences to csv
-        to_csv('supports.csv', 'Supports(%)', supports)
-        # to_csv('confidences.csv', 'Confidences(%)', upd_confidences)
+        # Writing confidences to csv
+        to_csv('confidences.csv', 'Confidences(%)', upd_confidences)
 
         # i += 1
         break
