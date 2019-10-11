@@ -76,7 +76,7 @@ def apriori(filename, min_supp, min_conf):
     combs = []
     prev_count = 0
     updated_combs = []
-    c = 1
+    c = 3
     confidences = []
 
     # Setting parameter to check for additional itemsets that meet minimum support requirements.
@@ -93,9 +93,9 @@ def apriori(filename, min_supp, min_conf):
 
     while True:
         break_count = prev_count
-        print(f'Generating association rules for itemsets of {c + 2}...')
+        print(f'Generating association rules for itemsets of {c}...')
 
-        updated_combs = merge(met_combs[(len(unique_data) - 1):], c)
+        updated_combs = merge(met_combs[(len(unique_data) - 1):], c - 2)
 
         supports.extend(check_support(updated_combs, data_list, min_supp)[0])
         met_combs.extend(check_support(updated_combs, data_list, min_supp)[1])
@@ -104,7 +104,7 @@ def apriori(filename, min_supp, min_conf):
         # Writing supports to csv
         to_csv('supports.csv', 'Supports(%)', supports)
 
-        print(f'Calculating confidences for itemsets of {c + 2}...')
+        print(f'Calculating confidences for itemsets of {c}...')
         # Loop through unique itemsets to calculate confidence.
         confidence = 0
         perms = []
@@ -134,8 +134,10 @@ def apriori(filename, min_supp, min_conf):
 
         # Writing confidences to csv
         to_csv('confidences.csv', 'Confidences(%)', confidences)
+        print('c: ', c)
+        print('max length: ', max_length)
 
-        if prev_count - break_count == 0:
+        if prev_count - break_count == 0 or c == max_length:
             break
 
         c += 1
