@@ -80,14 +80,10 @@ def apriori(filename, min_supp, min_conf):
         combs.extend(list(map(list, (it.combinations(met_combs, 2)))))
         supports.extend(check_support(combs, data_list, min_supp)[0])
         met_combs.extend(check_support(combs, data_list, min_supp)[1])
-        # print(supports)
-        # print(met_combs[(len(unique_data) - 1):])
 
         updated_combs = merge(met_combs[(len(unique_data) - 1):], 1)
         supports.extend(check_support(updated_combs, data_list, min_supp)[0])
         met_combs.extend(check_support(updated_combs, data_list, min_supp)[1])
-        # print(supports)
-        # print(updated_combs)
 
         # Writing supports to csv
         to_csv('supports.csv', 'Supports(%)', supports)
@@ -120,7 +116,7 @@ def apriori(filename, min_supp, min_conf):
                     confidence = round((num / den) * 100, 2)
                     if confidence > min_conf:
                         confidences.append(
-                            [f'{{{left}}} -> {{{right}}}', confidence])
+                            [f'{left} -> {right}', confidence])
 
         print('Removing redundant confidences...')
         upd_confidences = set(tuple(x) for x in confidences)
