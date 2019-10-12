@@ -1,5 +1,5 @@
 1,Diaper
-2,Diaper,Cereal,Ice cream,Napkins,Chips
+2,Diaper,Cereal,Ice cream,Napkins,Chips,Milk,Eggs
 3,Ice cream,Napkins
 4,Cereal,Grapes,Juice,Ice cream,Chips,Wine
 5,Napkins,Chips,Eggs,Cereal,Grapes
@@ -8,12 +8,12 @@
 8,Wine,Napkins,Cereal
 9,Juice,Wine
 10,Cereal,Chips,Napkins
-11,Milk,Ice cream,Grapes,Napkins
-12,Eggs,Diaper,Ice cream,Milk,Wine
-13,Cereal,Ice cream,Chips,Diaper
+11,Milk,Ice cream,Grapes,Napkins,Chips,Wine,Cereal
+12,Eggs,Diaper,Ice cream,Milk,Wine,Chips,Cereal
+13,Cereal,Ice cream,Chips,Diaper,Milk,Eggs
 14,Wine
 15,Juice,Ice cream
-16,Juice,Grapes,Cereal,Chips,Milk
+16,Juice,Grapes,Cereal,Chips,Milk,Wine
 17,Grapes,Diaper,Eggs,Wine,Milk,Juice
 18,Napkins
 19,Milk,Grapes
