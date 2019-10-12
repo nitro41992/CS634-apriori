@@ -1,6 +1,6 @@
 import itertools as it
 import csv
-
+import os.path
 
 # create csv from data list
 
@@ -59,7 +59,6 @@ def apriori(filename, min_supp, min_conf):
         for item in line:
             data.append(item)
     unique_data = list(dict.fromkeys(data))
-    # print(unique_data)
 
     supports = {}
     met_combs = []
@@ -116,37 +115,34 @@ def apriori(filename, min_supp, min_conf):
                 size = 1
             else:
                 size = len(comb)
+
+            # Switching the orientation of the combination to capture opposite orientation to the initial combination
             for k in range(1,3):
                 if k == 2:
                     comb = comb[::-1]            
 
                 # Check to make sure itemsets have more than one item in order to isolate associations itemsets
                 if size > 1 and isinstance(comb, str) == False and size <= max_length:
-                    # Creating permutations based off of itemsets in order to create all association combinations
+
+                    # Creating combinations based off of itemsets in order to create all association combinations
                     perms = list(it.combinations(comb, len(comb)))
-                    # print(perms)
+
                     for i in range(len(perms)):
                         for j in range(1, len(perms[i])):
-                            # Isolating the left and right of each association and calculating the confidence
 
-                            # print(keys)
+                            # Isolating the left and right of each association and calculating the confidence
                             for itemset, support in supports.items():
                                 if sorted(itemset) == sorted(perms[i][j:]) or itemset == perms[i][j:][0]:
                                     den = support
                                 if sorted(itemset) == sorted(perms[i]):
                                     num = support
-                                # if sorted(itemset) == sorted(perms[i][j:][::-1]) or itemset == perms[i][j:][0]:
-                                #     den2 = support
 
                             # Making sure confidence meets the minimum requirements
                             confidence = round(((num/den) * 100), 2)
-                            # confidence2 = round(((num/den2) * 100), 2)
+
                             if confidence > min_conf:
                                 confidences.update(
                                     {f'{perms[i][:j]} -> {perms[i][j:]}': confidence})
-                            # if confidence2 > min_conf:
-                            #     confidences.update(
-                            #         {f'{perms[i][:j][::-1]} -> {perms[i][j:][::-1]}': confidence2})        
 
         # Writing confidences to csv
         to_csv(f'confidences-{filename}.csv', confidences,
@@ -159,28 +155,27 @@ def apriori(filename, min_supp, min_conf):
 
 
 # # User inputs
-# while True:
-#     try:
-#         filename = input(
-#             'Enter the name of the transaction file. Include the file extension. (eg. \'.txt\') : ')
-#         if(os.path.exists(filename) == False):
-#             print('The file you selected does not exist, please try again')
-#             continue
-#         min_supp = int(input('Enter the minimum support value (0 - 100%): '))
-#         min_conf = int(
-#             input('Enter the minimum confidence value (0 - 100%): '))
-#     except ValueError:
-#         print('\n')
-#         print('Please make sure the minimum support and minimum confidence values are integers between 0 and 100.')
-#         print('\n')
-#         continue
-#     else:
-#         break
+while True:
+    try:
+        filename = input(
+            'Enter the name of the transaction file. Include the file extension. (eg. \'.txt\') : ')
+        if(os.path.exists(filename) == False):
+            print('The file you selected does not exist, please try again')
+            continue
+        min_supp = int(input('Enter the minimum support value (0 - 100%): '))
+        min_conf = int(
+            input('Enter the minimum confidence value (0 - 100%): '))
+    except ValueError:
+        print('\n')
+        print('Please make sure the minimum support and minimum confidence values are integers between 0 and 100.')
+        print('\n')
+        continue
+    else:
+        break
 
 
 # Running apriori function
-for x in range(1):
-    apriori(f'data{x + 1}.txt', 10, 10)
+apriori(filename, min_supp, min_conf)
 
 
 print('Process completed.')
