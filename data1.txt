@@ -14,7 +14,7 @@
 14,Chips,Ice cream,Eggs,Cereal,Grapes,Wine,Diaper,Milk,Napkins,Juice
 15,Eggs,Napkins,Diaper,Chips,Wine,Cereal
 16,Napkins,Milk,Juice,Eggs,Diaper,Ice cream,Grapes,Wine,Chips
-17,Eggs,Wine,Ice cream,Grapes,Napkins,Milk,Diaper,Cereal,Chips
+17,Eggs,Wine,Ice cream,Napkins,Milk,Diaper,Cereal,Chips
 18,Cereal,Eggs,Wine,Diaper,Grapes,Napkins,Milk,Juice,Ice cream
-19,Napkins,Juice,Ice cream,Eggs,Cereal,Milk,Diaper
-20,Napkins,Eggs,Cereal,Milk,Juice,Ice cream,Chips,Diaper
+19,Napkins,Juice,Ice cream,Eggs,Milk,Diaper
+20,Napkins,Eggs,Cereal,Milk,Juice,Ice cream,Chips
