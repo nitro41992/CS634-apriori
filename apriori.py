@@ -172,27 +172,28 @@ def apriori(filename, min_supp, min_conf):
 
 
 # User inputs
-while True:
-    try:
-        filename = input(
-            'Enter the name of the transaction file. Include the file extension. (eg. \'.txt\') : ')
-        if(os.path.exists(filename) == False):
-            print('The file you selected does not exist, please try again')
-            continue
-        min_supp = int(input('Enter the minimum support value (0 - 100%): '))
-        min_conf = int(
-            input('Enter the minimum confidence value (0 - 100%): '))
-    except ValueError:
-        print('\n')
-        print('Please make sure the minimum support and minimum confidence values are integers between 0 and 100.')
-        print('\n')
-        continue
-    else:
-        break
+# while True:
+#     try:
+#         filename = input(
+#             'Enter the name of the transaction file. Include the file extension. (eg. \'.txt\') : ')
+#         if(os.path.exists(filename) == False):
+#             print('The file you selected does not exist, please try again')
+#             continue
+#         min_supp = int(input('Enter the minimum support value (0 - 100%): '))
+#         min_conf = int(
+#             input('Enter the minimum confidence value (0 - 100%): '))
+#     except ValueError:
+#         print('\n')
+#         print('Please make sure the minimum support and minimum confidence values are integers between 0 and 100.')
+#         print('\n')
+#         continue
+#     else:
+#         break
 
 
 # Running apriori function
-apriori(filename, min_supp, min_conf)
+for x in range(1, 6):
+    apriori(f'data{x}.txt', 75, 95)
 
 
 print('Process completed.')

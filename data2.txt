@@ -1,20 +1,20 @@
-1,Milk,Chips,Grapes,Napkins
-2,Wine,Grapes,Ice cream,Juice,Napkins,Eggs
-3,Eggs,Napkins,Milk,Grapes
-4,Napkins
-5,Eggs,Wine,Grapes,Napkins
-6,Juice
-7,Eggs
-8,Milk,Diaper,Chips,Cereal
-9,Milk,Diaper,Grapes,Napkins,Cereal
-10,Wine,Grapes,Cereal,Diaper,Chips,Napkins
-11,Grapes,Eggs
-12,Eggs,Wine,Grapes,Diaper,Napkins
-13,Cereal,Napkins,Ice cream,Wine,Grapes
-14,Napkins,Juice,Cereal
-15,Milk,Grapes,Chips,Ice cream
-16,Cereal,Ice cream,Chips,Grapes
-17,Napkins,Milk,Eggs
-18,Juice,Grapes,Eggs
-19,Grapes,Chips,Eggs,Cereal,Milk
-20,Napkins,Juice,Eggs,Cereal,Ice cream,Diaper
+1,Eggs,Grapes,Milk,Ice cream,Juice,Chips,Wine,Diaper,Cereal,Napkins
+2,Eggs,Wine,Juice,Ice cream,Milk,Grapes,Chips,Napkins,Diaper,Cereal
+3,Chips,Grapes,Cereal,Napkins,Ice cream,Eggs,Milk,Juice,Diaper,Wine
+4,Grapes,Cereal,Diaper,Juice,Napkins,Milk,Chips,Eggs,Wine,Ice cream
+5,Chips,Milk,Cereal,Juice,Grapes,Wine,Napkins,Ice cream
+6,Juice,Eggs,Grapes,Napkins,Milk,Diaper,Ice cream,Wine,Chips
+7,Wine,Cereal,Eggs,Juice,Diaper,Napkins,Ice cream,Chips,Milk
+8,Diaper,Wine,Juice,Grapes,Napkins,Chips,Ice cream,Eggs
+9,Juice,Ice cream,Diaper,Cereal,Milk,Grapes,Napkins,Wine
+10,Cereal,Milk,Napkins,Chips,Juice,Wine,Grapes,Eggs,Diaper
+11,Eggs,Cereal,Wine,Milk,Napkins,Grapes,Juice,Ice cream,Chips,Diaper
+12,Grapes,Napkins,Juice,Chips,Cereal,Ice cream,Wine,Eggs,Diaper
+13,Chips,Wine,Ice cream,Cereal,Grapes,Napkins,Diaper,Juice,Milk,Eggs
+14,Diaper,Grapes,Napkins,Juice,Wine,Cereal,Chips,Eggs,Ice cream,Milk
+15,Juice,Grapes,Wine,Cereal,Milk,Eggs,Ice cream,Napkins,Diaper
+16,Chips,Cereal,Eggs,Grapes,Diaper,Milk,Napkins,Ice cream,Wine
+17,Napkins,Milk,Wine,Juice,Cereal,Diaper,Ice cream,Eggs,Chips
+18,Wine,Ice cream,Juice,Milk,Cereal,Grapes,Diaper
+19,Milk,Ice cream,Diaper,Wine,Grapes,Napkins,Chips,Juice
+20,Juice,Eggs,Ice cream,Napkins,Chips,Diaper,Milk,Cereal
