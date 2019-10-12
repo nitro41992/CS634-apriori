@@ -147,9 +147,9 @@ def apriori(filename, min_supp, min_conf):
                 for i in range(len(perms)):
                     for j in range(1, len(perms[i])):
                         # Isolating the left and right of each association and calculating the confidence
-                        den = [x for x in supports if sorted(x[0])
+                        den = [x for x in upd_supports if sorted(x[0])
                                == sorted(perms[i][:j])][0][1]
-                        num = [x for x in supports if sorted(x[0])
+                        num = [x for x in upd_supports if sorted(x[0])
                                == sorted(perms[i])][0][1]
                         # Making sure confidence meets the minimum requirements
                         confidence = round(((num/den) * 100), 2)
